@@ -5,6 +5,8 @@ Code written for the CS5234 Project (NUS, Year 2021, Semester 1).
 Java implementation of the algorithm AP-BFS (and a variant designed by us), a cache-oblivious algorithm to solve the APSP problem (All-Pairs Shortest Path) in undirected unweighted graphs, used for example to compute the diameter of the graph.
 Benchmark of the AP-BFS algorithm and our variant to compare their performances at the step 3. of the algorithm.
 
+We used the library JGraphT (https://jgrapht.org/) to implement the Graph data structure (with Adjacency Lists).
+
 ## Structure of the algorithms
 
 The algorithm does the following:
