@@ -1,6 +1,7 @@
 package CS5234_MiniProject;
 
 import org.jgrapht.Graph;
+import org.jgrapht.alg.shortestpath.FloydWarshallShortestPaths;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -8,7 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 
 public class AP_BFS {
-    public Hashtable<String, Hashtable<String, Integer>> runAP_BFS(Graph graph) {
+    public long runAP_BFS(Graph graph) {
         // Needs to be changed in order to return the benchmark time too
         Hashtable<String, Hashtable<String, Integer>> results = new Hashtable<>();
         List<List<String>> iteration_plan = new ArrayList<>();// Plan for iteration, (key: v_i, value: v_i-1)
@@ -18,6 +19,7 @@ public class AP_BFS {
         // Run the first iteration
         results.put(iteration_plan.get(0).get(0), bfs.RunMR_BFS(graph, iteration_plan.get(0).get(0)));
         // Run the next iterations
+        long start_time = System.currentTimeMillis();
         for (List<String> nodes_tuple: iteration_plan) {
             if (nodes_tuple.equals(iteration_plan.get(0))) {
                 continue;
@@ -29,10 +31,10 @@ public class AP_BFS {
                 results.put(v_i, bfs.RunIncremental_BFS(graph, v_i, previous_bfs, v_i_minus_1));
             }
         }
-        return results;
+        return (System.currentTimeMillis() - start_time);
     }
 
-    public Hashtable<String, Hashtable<String, Integer>> runAP_BFS_extension(Graph graph) {
+    public long runAP_BFS_extension(Graph graph) {
         Hashtable<String, Hashtable<String, Integer>> results = new Hashtable<>();
         List<List<String>> iteration_plan = new ArrayList<>();// Plan for iteration, (key: v_i, value: v_i-1)
         // TODO Create order by populating iteration plan
@@ -41,6 +43,7 @@ public class AP_BFS {
         // Run the first iteration
         results.put(iteration_plan.get(0).get(0), bfs.RunMR_BFS(graph, iteration_plan.get(0).get(0)));
         // Run the next iterations
+        long start_time = System.currentTimeMillis();
         for (List<String> nodes_tuple: iteration_plan) {
             if (nodes_tuple.equals(iteration_plan.get(0))) {
                 continue;
@@ -52,17 +55,28 @@ public class AP_BFS {
                 results.put(v_i, bfs.RunIncremental_BFS(graph, v_i, previous_bfs, v_i_minus_1));
             }
         }
-        return results;
+        return (System.currentTimeMillis() - start_time);
     }
 
-    public Hashtable<String, Hashtable<String, Integer>> runMR_BFS_Only(Graph graph) {
+    public long runMR_BFS_Only(Graph graph) {
         Hashtable<String, Hashtable<String, Integer>> results = new Hashtable<>();
         Iterator<String> vertices_iterator = graph.vertexSet().iterator();
         BFS mr_bfs = new BFS();
+        long start_time = System.currentTimeMillis();
         while (vertices_iterator.hasNext()) {
             String node = vertices_iterator.next();
             results.put(node, mr_bfs.RunMR_BFS(graph, node));
         }
-        return results;
+        return (System.currentTimeMillis() - start_time);
+    }
+
+    public long runFloyd_Warshall(Graph graph) {
+        // Doc https://jgrapht.org/javadoc-1.3.1/org/jgrapht/alg/shortestpath/FloydWarshallShortestPaths.html
+        FloydWarshallShortestPaths floydWarshallShortestPaths = new FloydWarshallShortestPaths(graph);
+        // Start timer
+        long start_time = System.currentTimeMillis();
+        // the paths are computed the first time we call a method of this class
+        floydWarshallShortestPaths.getShortestPathsCount();
+        return (System.currentTimeMillis() - start_time);
     }
 }
