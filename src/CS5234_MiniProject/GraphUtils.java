@@ -16,6 +16,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Supplier;
@@ -42,9 +44,8 @@ public class GraphUtils {
             List<Set<String>> connected_sets = connectivity_inspector.connectedSets();
             // We add one edge between the first node of the Sets Si and Si-1, with i from 1 to connected_sets.size() - 1
             for (Integer i=1; i < connected_sets.size(); i++) {
-                // TODO
+                graph.addEdge(connected_sets.get(i-1).stream().findFirst().get(),connected_sets.get(i).stream().findFirst().get());
             }
-
         }
         return graph;
     }

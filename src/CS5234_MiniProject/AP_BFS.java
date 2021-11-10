@@ -1,20 +1,22 @@
 package CS5234_MiniProject;
 
 import org.jgrapht.Graph;
+import org.jgrapht.Graphs;
+import org.jgrapht.alg.cycle.HierholzerEulerianCycle;
 import org.jgrapht.alg.shortestpath.FloydWarshallShortestPaths;
+import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.traverse.BreadthFirstIterator;
+import org.jgrapht.traverse.GraphIterator;
 
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class AP_BFS {
     public long runAP_BFS(Graph graph) {
         // Needs to be changed in order to return the benchmark time too
         Hashtable<String, Hashtable<String, Integer>> results = new Hashtable<>();
-        List<List<String>> iteration_plan = new ArrayList<>();// Plan for iteration, (key: v_i, value: v_i-1)
-        // TODO Create order by populating iteration plan
-
+        List<List<String>> iteration_plan = new ArrayList<>();
+        // Plan for iteration, (v_i, v_i-1)
+        iteration_plan = get_euler_tour_order(graph);
         BFS bfs = new BFS();
         // Run the first iteration
         results.put(iteration_plan.get(0).get(0), bfs.RunMR_BFS(graph, iteration_plan.get(0).get(0)));
@@ -36,9 +38,9 @@ public class AP_BFS {
 
     public long runAP_BFS_extension(Graph graph) {
         Hashtable<String, Hashtable<String, Integer>> results = new Hashtable<>();
-        List<List<String>> iteration_plan = new ArrayList<>();// Plan for iteration, (key: v_i, value: v_i-1)
-        // TODO Create order by populating iteration plan
-
+        List<List<String>> iteration_plan = new ArrayList<>();
+        // Plan for iteration, (v_i, v_i-1)
+        iteration_plan = get_extension_order(graph);
         BFS bfs = new BFS();
         // Run the first iteration
         results.put(iteration_plan.get(0).get(0), bfs.RunMR_BFS(graph, iteration_plan.get(0).get(0)));
@@ -78,5 +80,38 @@ public class AP_BFS {
         // the paths are computed the first time we call a method of this class
         floydWarshallShortestPaths.getShortestPathsCount();
         return (System.currentTimeMillis() - start_time);
+    }
+
+    public List<List<String>> get_extension_order(Graph graph) {
+        GraphIterator<String, DefaultEdge> breadthFirstIterator = new BreadthFirstIterator(graph);
+        Hashtable<String, String> order_dictionary = new Hashtable<>();
+        List<List<String>> order = new ArrayList<>();
+        while (breadthFirstIterator.hasNext()) {
+            String node = breadthFirstIterator.next();
+            List<String> children = Graphs.neighborListOf(graph, node);
+            for (String child: children) {
+                if (!order_dictionary.containsKey(child)) {
+                    order_dictionary.put(child, node);
+                }
+            }
+        }
+        for (String key: order_dictionary.keySet()) {
+            String v_i_minus_1 = order_dictionary.get(key);
+            String v_i = key;
+            order.add(Arrays.asList(v_i, v_i_minus_1));
+        }
+        return order;
+    }
+
+    public List<List<String>> get_euler_tour_order(Graph graph) {
+        List<List<String>> order = new ArrayList<>();
+        HierholzerEulerianCycle hierholzerEulerianCycle = new HierholzerEulerianCycle();
+        List<String> eulerian_cycle_vertex_list = hierholzerEulerianCycle.getEulerianCycle(graph).getVertexList();
+        // Plan for iteration, (v_i, v_i-1)
+        order.add(Arrays.asList(eulerian_cycle_vertex_list.get(0), eulerian_cycle_vertex_list.get(0)));
+        for (Integer i=1; i < eulerian_cycle_vertex_list.size(); i++) {
+            order.add(Arrays.asList(eulerian_cycle_vertex_list.get(i), eulerian_cycle_vertex_list.get(i-1)));
+        }
+        return order;
     }
 }
