@@ -1,19 +1,20 @@
 package CS5234_MiniProject;
 
-import org.jgrapht.Graph;
-
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Main {
 
     public static void main(String[] args) {
-        // Test graph by printing it
-        GraphUtils graph_utils = new GraphUtils();
-        Graph graph = graph_utils.generateRandomGraph(100, 4000, 100L);
-        try {
-            graph_utils.visualizeGraph(graph, System.getProperty("user.dir")+"\\graph.png");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Benchmark benchmark = new Benchmark();
+        List<List<Integer>> benchmark_plan = new ArrayList<>();
+        List<Integer> plan_1 = Arrays.asList(1000, 50000);
+        benchmark_plan.add(plan_1);
+        List<Integer> plan_2 = Arrays.asList(1000, 10000);
+        benchmark_plan.add(plan_2);
+        List<Integer> plan_3 = Arrays.asList(1000, 5000);
+        benchmark_plan.add(plan_3);
+        benchmark.runBenchmarks(benchmark_plan,100L);
     }
 }

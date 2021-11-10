@@ -11,7 +11,7 @@ public class BFS {
         List<List<String>> layers = new ArrayList<>();
         Hashtable<String, Integer> bfs_results = new Hashtable<>();
         Integer layer_count = 0;
-        layers.set(0, Arrays.asList(starting_node));
+        layers.add(Arrays.asList(starting_node));
         Integer node_count = graph.vertexSet().size() - 1; // Count the number of nodes that haven't been added to a layer
         while (node_count != 0) {
             layer_count ++;
@@ -44,7 +44,7 @@ public class BFS {
             }
             // Decrement node count
             node_count = node_count - layer_i.size();
-            layers.set(layer_count, layer_i);
+            layers.add(layer_i);
             for (String node : layer_i) { // Add the nodes to the structure we will return
                 bfs_results.put(node, layer_count);
             }
