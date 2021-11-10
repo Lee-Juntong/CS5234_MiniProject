@@ -7,6 +7,7 @@ import java.util.*;
 
 public class BFS {
     public Hashtable<String, Integer> RunMR_BFS(Graph graph, String starting_node) {
+        // needs to handle case where they are not in the same cc
         List<List<String>> layers = new ArrayList<>();
         Hashtable<String, Integer> bfs_results = new Hashtable<>();
         Integer layer_count = 0;
@@ -52,6 +53,7 @@ public class BFS {
     }
 
     public Hashtable<String, Integer> RunIncremental_BFS(Graph graph, String starting_node, Hashtable<String, Integer> previous_bfs_results, String previous_bfs_node) {
+        // needs to handle case where they are not in the same cc
         List<List<String>> layers = new ArrayList<>();
         Integer node_count = graph.vertexSet().size(); // Count the number of nodes that haven't been added to a layer
         Integer layer_count = 0;
