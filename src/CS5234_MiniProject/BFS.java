@@ -52,7 +52,6 @@ public class BFS {
         // Build A[i], the list of lists, called previous_adjacency_lists
         Hashtable<String, Integer> bfs_results = new Hashtable<>();
         Hashtable<Integer, List<List<String>>> previous_adjacency_lists = new Hashtable<>();
-        // TODO Adjacency list is not built correctly
         Set<String> nodes = previous_bfs_results.keySet();
         for (String node : nodes) {
             List<String> neighbours = Graphs.neighborListOf(graph, node);
@@ -65,7 +64,7 @@ public class BFS {
         }
         Integer distance_u_v = previous_bfs_results.get(starting_node);
         layers.add(Arrays.asList(starting_node));
-
+        node_count--;
         while (node_count != 0) {
             layer_count ++;
             List<String> layer_i = new ArrayList<>(); // Use array list and not linked list

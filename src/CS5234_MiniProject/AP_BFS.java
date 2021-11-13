@@ -2,12 +2,10 @@ package CS5234_MiniProject;
 
 import org.jgrapht.Graph;
 import org.jgrapht.Graphs;
-import org.jgrapht.alg.interfaces.SpanningTreeAlgorithm;
 import org.jgrapht.alg.shortestpath.FloydWarshallShortestPaths;
-import org.jgrapht.alg.spanning.KruskalMinimumSpanningTree;
-import org.jgrapht.graph.AsSubgraph;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.traverse.BreadthFirstIterator;
+import org.jgrapht.traverse.DepthFirstIterator;
 import org.jgrapht.traverse.GraphIterator;
 
 import java.util.*;
@@ -43,7 +41,6 @@ public class AP_BFS {
         List<List<String>> iteration_plan = new ArrayList<>();
         // Plan for iteration, (v_i, v_i-1)
         iteration_plan = get_extension_order(graph);
-        System.out.println(iteration_plan.size());
         BFS bfs = new BFS();
         long start_time = System.currentTimeMillis();
         for (List<String> nodes_tuple: iteration_plan) {
@@ -113,13 +110,23 @@ public class AP_BFS {
 
     public List<List<String>> get_euler_tour_order(Graph graph) {
         List<List<String>> order = new ArrayList<>();
-        KruskalMinimumSpanningTree kruskalMinimumSpanningTree = new KruskalMinimumSpanningTree(graph);
-        SpanningTreeAlgorithm.SpanningTree spanningTree = kruskalMinimumSpanningTree.getSpanningTree();
-        Graph spanningTreeGraph = new AsSubgraph(graph, graph.vertexSet(), spanningTree.getEdges());
-        // Compute Euler Tour
-
-        // Plan for iteration, (v_i, v_i-1)
-
+        Hashtable<String, String> has_been_visited = new Hashtable<>();
+        // To obtain the order with the Euler tour, we need to construct a spanning tree (we chose with DFS), and run a DFS on it
+        // Here, we will do the following: DFS, when a node is first encountered, we add it to the order
+        DepthFirstIterator dfs_iterator = new DepthFirstIterator(graph);
+        while (dfs_iterator.hasNext()) {
+            String node = (String) dfs_iterator.next();
+            if (!has_been_visited.containsKey(node)) {
+                if (order.isEmpty()) {
+                    order.add(Arrays.asList(node, node));
+                    continue;
+                }
+                // Plan for iteration, (v_i, v_i-1)
+                order.add(Arrays.asList(node, order.get(order.size() -1).get(0)));
+                has_been_visited.put(node, "yes");
+            }
+        }
         return order;
     }
+
 }

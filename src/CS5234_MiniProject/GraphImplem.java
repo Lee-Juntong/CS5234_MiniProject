@@ -5,13 +5,13 @@ import java.util.ArrayList;
 
 // An Undirected graph using
 // adjacency list representation
-public class Graph {
+public class GraphImplem {
 
     private int vertices; // No. of vertices
     private ArrayList<Integer>[] adj; // adjacency list
 
     // Constructor
-    Graph(int numOfVertices)
+    GraphImplem(int numOfVertices)
     {
         // initialise vertex count
         this.vertices = numOfVertices;
@@ -19,8 +19,8 @@ public class Graph {
         // initialise adjacency list
         initGraph();
     }
-    public Graph clone(){
-        Graph temp=new Graph(vertices);
+    public GraphImplem clone(){
+        GraphImplem temp=new GraphImplem(vertices);
         temp.adj=this.adj.clone();
         return temp;
     }
@@ -145,22 +145,22 @@ public class Graph {
     public static void main(String a[]) throws CloneNotSupportedException {
         // Let us first create and test
         // graphs shown in above figure
-        Graph g1 = new Graph(4);
+        GraphImplem g1 = new GraphImplem(4);
         g1.addEdge(0, 1);
         g1.addEdge(0, 2);
         g1.addEdge(1, 2);
         g1.addEdge(2, 3);
-        Graph temp=g1.clone();
+        GraphImplem temp=g1.clone();
         temp.findEulerTour();
 
-        Graph g2 = new Graph(3);
+        GraphImplem g2 = new GraphImplem(3);
         g2.addEdge(0, 1);
         g2.addEdge(1, 2);
         g2.addEdge(2, 0);
         temp=g2.clone();
         temp.findEulerTour();
 
-        Graph g3 = new Graph(5);
+        GraphImplem g3 = new GraphImplem(5);
         g3.addEdge(1, 0);
         g3.addEdge(0, 2);
         g3.addEdge(2, 1);

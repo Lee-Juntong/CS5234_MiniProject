@@ -7,14 +7,19 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-        Benchmark benchmark = new Benchmark();
-        List<List<Integer>> benchmark_plan = new ArrayList<>();
-        List<Integer> plan_1 = Arrays.asList(1000, 50000);
-        benchmark_plan.add(plan_1);
-        List<Integer> plan_2 = Arrays.asList(1000, 10000);
-        benchmark_plan.add(plan_2);
-        List<Integer> plan_3 = Arrays.asList(1000, 5000);
-        benchmark_plan.add(plan_3);
-        benchmark.runBenchmarks(benchmark_plan,100L);
+        List<Long> seeds = Arrays.asList(100L, 200L, 300L);
+        for (Long seed : seeds) {
+            System.out.println("Benchmark for seed: "+seed);
+            Benchmark benchmark = new Benchmark();
+            List<List<Integer>> benchmark_plan = new ArrayList<>();
+            List<Integer> plan_1 = Arrays.asList(1000, 50000);
+            benchmark_plan.add(plan_1);
+            List<Integer> plan_2 = Arrays.asList(1000, 10000);
+            benchmark_plan.add(plan_2);
+            List<Integer> plan_3 = Arrays.asList(1000, 5000);
+            benchmark_plan.add(plan_3);
+            benchmark.runBenchmarks(benchmark_plan,seed);
+        }
+
     }
 }

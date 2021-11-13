@@ -30,8 +30,8 @@ public class Benchmark {
             benchmarkResults.add(new BenchmarkResult("MR-BFS only", i, ap_bfs_algorithms.runMR_BFS_Only(benchmark_graph)));
             System.out.println(benchmarkResults.get(benchmarkResults.size() -1));
             System.out.println("Starting AP-BFS");
-            //benchmarkResults.add(new BenchmarkResult("AP-BFS", i, ap_bfs_algorithms.runAP_BFS(benchmark_graph)));
-            //System.out.println(benchmarkResults.get(benchmarkResults.size() -1));
+            benchmarkResults.add(new BenchmarkResult("AP-BFS", i, ap_bfs_algorithms.runAP_BFS(benchmark_graph)));
+            System.out.println(benchmarkResults.get(benchmarkResults.size() -1));
             System.out.println("Starting AP-BFS extension");
             benchmarkResults.add(new BenchmarkResult("AP-BFS extension", i, ap_bfs_algorithms.runAP_BFS_extension(benchmark_graph)));
             System.out.println(benchmarkResults.get(benchmarkResults.size() -1));
