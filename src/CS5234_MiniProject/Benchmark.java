@@ -25,12 +25,16 @@ public class Benchmark {
             System.out.println("Starting benchmarks");
             System.out.println("Starting Floyd-warshall");
             benchmarkResults.add(new BenchmarkResult("Floyd-warshall", i, ap_bfs_algorithms.runFloyd_Warshall(benchmark_graph)));
+            System.out.println(benchmarkResults.get(benchmarkResults.size() -1));
             System.out.println("Starting MR-BFS only");
             benchmarkResults.add(new BenchmarkResult("MR-BFS only", i, ap_bfs_algorithms.runMR_BFS_Only(benchmark_graph)));
+            System.out.println(benchmarkResults.get(benchmarkResults.size() -1));
             System.out.println("Starting AP-BFS");
-            benchmarkResults.add(new BenchmarkResult("AP-BFS", i, ap_bfs_algorithms.runAP_BFS(benchmark_graph)));
+            //benchmarkResults.add(new BenchmarkResult("AP-BFS", i, ap_bfs_algorithms.runAP_BFS(benchmark_graph)));
+            //System.out.println(benchmarkResults.get(benchmarkResults.size() -1));
             System.out.println("Starting AP-BFS extension");
             benchmarkResults.add(new BenchmarkResult("AP-BFS extension", i, ap_bfs_algorithms.runAP_BFS_extension(benchmark_graph)));
+            System.out.println(benchmarkResults.get(benchmarkResults.size() -1));
             System.out.println("Finished running benchmarks for graph " + i);
             i++;
         }
