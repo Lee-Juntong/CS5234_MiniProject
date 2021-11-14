@@ -12,11 +12,11 @@ public class Main {
             System.out.println("Benchmark for seed: "+seed);
             Benchmark benchmark = new Benchmark();
             List<List<Integer>> benchmark_plan = new ArrayList<>();
-            List<Integer> plan_1 = Arrays.asList(1000, 50000);
+            List<Integer> plan_1 = Arrays.asList(1000, 400000);
             benchmark_plan.add(plan_1);
-            List<Integer> plan_2 = Arrays.asList(1000, 10000);
+            List<Integer> plan_2 = Arrays.asList(1000, 200000);
             benchmark_plan.add(plan_2);
-            List<Integer> plan_3 = Arrays.asList(1000, 5000);
+            List<Integer> plan_3 = Arrays.asList(1000, 50000);
             benchmark_plan.add(plan_3);
             benchmark.runBenchmarks(benchmark_plan,seed);
         }
